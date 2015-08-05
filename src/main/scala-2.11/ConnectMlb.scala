@@ -14,6 +14,21 @@ object ConnectMlb {
       x.attributes("team_flag").exists(i => i.text == "home")) \ "pitcher"
   }
 
+  def getAwayPitchers(boxscore: Elem): NodeSeq = {
+    (boxscore \\ "pitching").filter(x =>
+      x.attributes("team_flag").exists(i => i.text == "away")) \ "pitcher"
+  }
+
+  def getHomeBatters(boxscore: Elem): NodeSeq = {
+    (boxscore \\ "batting").filter(x =>
+      x.attributes("team_flag").exists(i => i.text == "home")) \ "batter"
+  }
+
+  def getAwayBatters(boxscore: Elem): NodeSeq = {
+    (boxscore \\ "batting").filter(x =>
+      x.attributes("team_flag").exists(i => i.text == "away")) \ "batter"
+  }
+
   def getGames(date: DateTime):List[String] = {
     val doc = getMasterScoreboardXml(date)
     val gameNodes = doc \\ "game"
