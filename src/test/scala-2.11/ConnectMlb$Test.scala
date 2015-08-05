@@ -85,4 +85,50 @@ class ConnectMlb$Test extends FunSuite {
     assert(homePitchers.length == 4)
     assert((homePitchers(1) \ "@name").text == "Bass")
   }
+
+  test("getAwayPitchers should return a list of Node Objects of the pitchers from the away team") {
+
+    // Arrange
+    val date = new DateTime(2015, 4, 15, 0, 0, 0, 0)
+    val gameList = ConnectMlb.getGames(date)
+    val boxscore = ConnectMlb.getBoxscoreXml(gameList(3))
+
+    // Act
+    val awayPitchers = ConnectMlb.getAwayPitchers(boxscore)
+
+    // Assert
+    assert(awayPitchers.length == 2)
+    assert((awayPitchers(0) \ "@name").text == "Santiago, H")
+
+  }
+
+  test("getHomeBatters should return a list of Node objects of the batters from the home team") {
+
+    // Arrange
+    val date = new DateTime(2015, 4, 15, 0, 0, 0, 0)
+    val gameList = ConnectMlb.getGames(date)
+    val boxscore = ConnectMlb.getBoxscoreXml(gameList(3))
+
+    // Act
+    val homeBatters = ConnectMlb.getHomeBatters(boxscore)
+
+    // Assert
+    assert(homeBatters.length == 15)
+    assert((homeBatters(2) \ "@name").text == "Beltre, A")
+  }
+
+  test("getAwayBatters should return a list of Node Objects of the batters from the away team") {
+
+    // Arrange
+    val date = new DateTime(2015, 4, 15, 0, 0, 0, 0)
+    val gameList = ConnectMlb.getGames(date)
+    val boxscore = ConnectMlb.getBoxscoreXml(gameList(3))
+
+    // Act
+    val awayBatters = ConnectMlb.getAwayBatters(boxscore)
+
+    // Assert
+    assert(awayBatters.length == 12)
+    assert((awayBatters(2) \ "@name").text == "Pujols")
+  }
 }
